@@ -1,5 +1,6 @@
 import 'package:aws_s3/aws_s3.dart';
 import 'package:aws_s3_image_app/image_container.dart';
+import 'package:aws_s3_image_app/image_file.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:async';
@@ -38,7 +39,7 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
 
-  List<PickedFile> _pickedFiles = [];
+  List<ImageFile> _imageFiles = [];
   final picker = ImagePicker();
 
   //to ensure image is uploading from the native android
@@ -87,7 +88,7 @@ class _MyHomePageState extends State<MyHomePage> {
         bucketName: bucketName);
 
     setState(() => isFileUploading = true);
-    //displayUploadDialog(awsS3);
+    displayUploadDialog(awsS3);
 
     try {
       try {
@@ -101,11 +102,15 @@ class _MyHomePageState extends State<MyHomePage> {
       debugPrint("Failed :'${e.message}'.");
     }
 
-    //Navigator.of(context).pop();
+    Navigator.of(context).pop();
 
     if (result != null) {
       setState(() {
-        _pickedFiles.add(pickedFile);
+        var imageFile = ImageFile(
+            uploadPath:"https://bulwark-test-bucket.s3-ap-southeast-1.amazonaws.com/img/$result",
+            localPath:pickedFile.path
+        );
+        _imageFiles.add(imageFile);
       });
     }
     else {
@@ -166,8 +171,11 @@ class _MyHomePageState extends State<MyHomePage> {
           crossAxisSpacing: 10,
           mainAxisSpacing: 10,
           crossAxisCount: 3,
-          children: List.generate(_pickedFiles.length, (index) {
-            return ImageContainer(imagePath: _pickedFiles[index].path);
+          children: List.generate(_imageFiles.length, (index) {
+            return ImageContainer(
+                localPath: _imageFiles[index].localPath,
+                uploadPath: _imageFiles[index].uploadPath,
+            );
           }),
         ),
       ),
