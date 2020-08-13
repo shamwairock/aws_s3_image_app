@@ -31,6 +31,7 @@ dependencies:
   aws_s3: ^0.1.1+hotfix.5
   image_picker: ^0.6.7+4
   uuid: 2.2.0
+  image_downloader: ^0.20.0
 dev_dependencies:
   flutter_test:
     sdk: flutter

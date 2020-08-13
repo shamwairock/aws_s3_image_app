@@ -1,6 +1,6 @@
 class ImageFile{
-  final String uploadPath;
+  final String networkPath;
   final String localPath;
 
-  const ImageFile({this.uploadPath, this.localPath});
+  const ImageFile({this.networkPath, this.localPath});
 }

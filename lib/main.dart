@@ -107,7 +107,7 @@ class _MyHomePageState extends State<MyHomePage> {
     if (result != null) {
       setState(() {
         var imageFile = ImageFile(
-            uploadPath:"https://bulwark-test-bucket.s3-ap-southeast-1.amazonaws.com/img/$result",
+            networkPath:"https://bulwark-test-bucket.s3-ap-southeast-1.amazonaws.com/img/$result",
             localPath:pickedFile.path
         );
         _imageFiles.add(imageFile);
@@ -174,7 +174,7 @@ class _MyHomePageState extends State<MyHomePage> {
           children: List.generate(_imageFiles.length, (index) {
             return ImageContainer(
                 localPath: _imageFiles[index].localPath,
-                uploadPath: _imageFiles[index].uploadPath,
+                networkPath: _imageFiles[index].networkPath,
             );
           }),
         ),
